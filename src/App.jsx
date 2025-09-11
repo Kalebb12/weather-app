@@ -1,5 +1,6 @@
 import { Flex } from "@chakra-ui/react";
 import Navbar from "./components/ui/Navbar";
+import HomePage from "./pages/HomePage";
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
       p={{ base: "16px", md: "32px", lg: "48px 112px" }}
     >
       <Navbar />
+      <HomePage />
     </Flex>
   );
 };

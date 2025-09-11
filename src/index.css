@@ -15,6 +15,28 @@
 
   --blue-500: hsl(233, 67%, 56%);
   --blue-700: hsl(248, 70%, 36%);
+  --banner-gradient: linear-gradient(94deg, #4658D9 -8.59%, #2B1B9C 98.38%);
+
+  
+  --spacing-0: 0px;
+  --spacing-025: 2px;
+  --spacing-050: 4px;
+  --spacing-075: 6px;
+  --spacing-100: 8px; 
+  --spacing-125: 10px; 
+  --spacing-150: 12px;
+  --spacing-200: 16px;
+  --spacing-250: 20px;
+  --spacing-300: 24px;
+  --spacing-400: 32px;
+  --spacing-500: 40px;
+  --spacing-600: 48px;
+  --spacing-800: 64px;
+  --spacing-1000: 80px;
+  --spacing-1200: 96px;
+  --spacing-1400: 112px;
+  --spacing-1600: 128px;
+  --spacing-1800: 140px;
 
   --font-body: 'DM Sans', sans-serif;
   --font-heading: 'Bricolage Grotesque', sans-serif;
@@ -65,5 +87,8 @@ body {
   --spacing-1400: 112px;
   --spacing-1600: 128px;
   --spacing-1800: 140px;
-
 } 
+
+input::placeholder{
+  color: var(--neutral-0);
+}
