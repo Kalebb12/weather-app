@@ -1,6 +1,8 @@
 import { Heading, HStack, Image, Text, VStack } from '@chakra-ui/react'
+import PendingBanner from './PendingBanner'
 
-const Banner = () => {
+const Banner = ({isPending,data}) => { 
+  if(isPending) return <PendingBanner/>
   return (
     <HStack
           position="relative"

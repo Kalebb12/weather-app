@@ -14,7 +14,7 @@ const ForcastCard = ({ day, imgSrc, highTemp, lowTemp }) => {
       <Text fontSize="18px" fontWeight="medium">
         {day}
       </Text>
-      <Avatar.Root width="60px" height="60px" objectFit="cover" objectPosition="center" rounded="none">
+      <Avatar.Root width="60px" height="60px" objectFit="cover" objectPosition="center" bg="transparent" rounded="none">
         <Avatar.Image src={imgSrc} />
         <Avatar.Fallback name="Weather Forcast" />
       </Avatar.Root>

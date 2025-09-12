@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Flex,
@@ -8,17 +8,36 @@ import {
   InputGroup,
   Menu,
   Portal,
-  Text,
 } from "@chakra-ui/react";
 import { FaSearch } from "react-icons/fa";
 import Banner from "./Banner";
 import WeatherCard from "./WeatherCard";
 import ForcastCard from "./ForcastCard";
+import { useMutation } from "@tanstack/react-query";
+import { getLocation } from "@/services/forecastApi";
+import SearchDropdown from "./SearchDropdown";
+import useForecast from "@/hooks/useForecast";
 
 const WeatherFeature = () => {
+  const [location, setLocation] = useState("");
+
+  const handleSearch = () => {
+    getLocationData(location);
+  };
+
+  const {
+    mutate: getLocationData,
+    data ,
+    isPending,
+  } = useMutation({
+    mutationFn: () => getLocation(location),
+  });
+
+  // const {data: forecast,isPending: forcastPending,error} = useForecast()
+
   return (
     <Flex direction="column" gap="48px" alignItems="center">
-      <Flex gap="18px">
+      <Flex gap="18px" position="relative">
         <InputGroup startElement={<FaSearch color="var(--neutral-0)" />}>
           <Input
             width="528px"
@@ -27,33 +46,39 @@ const WeatherFeature = () => {
             border="none"
             outline="none"
             py="16px"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
             px="24px"
             placeholder="Search for a place.."
           />
         </InputGroup>
+
+        <SearchDropdown cityOptions={data?.results}/>
+
         <Button
           rounded="12px"
           bg="var(--blue-500)"
           color="var(--neutral-0)"
           px="24px"
           py="16px"
+          onClick={handleSearch}
         >
           Search
         </Button>
       </Flex>
-      <Main />
+      <Main isPending={isPending} data={data} />
     </Flex>
   );
 };
 
 export default WeatherFeature;
 
-const Main = () => {
+const Main = ({ isPending, data }) => {
   return (
     <Flex gap="32px" justifyContent="center">
       <Flex direction="column" gap="48px" width="800px">
         <Flex direction="column" gap="32px">
-          <Banner />
+          <Banner isPending={isPending} data={data} />
           <HStack gap="24px" alignItems="center">
             <WeatherCard title="feels like" value="20" unit="°C" />
             <WeatherCard title="Humidity" value="46" unit="%" />
@@ -118,19 +143,61 @@ const Main = () => {
         <HStack justifyContent="space-between">
           <Heading>Hourly forecast</Heading>
           <Menu.Root highlightedValue="mon">
-            <Menu.Trigger>
-              <Button>Hi</Button>
+            <Menu.Trigger asChild>
+              <Button
+                p="12px 16px"
+                spaceX="10px"
+                bg="var(--neutral-600)"
+                variant="subtle"
+                rounded="8px"
+              >
+                Days
+              </Button>
             </Menu.Trigger>
             <Portal>
               <Menu.Positioner>
-                <Menu.Content>
-                  <Menu.Item value="tue">Tuesday</Menu.Item>
-                  <Menu.Item>Wednesday</Menu.Item>
-                  <Menu.Item>Thurday</Menu.Item>
-                  <Menu.Item>Friday</Menu.Item>
-                  <Menu.Item>Thurday</Menu.Item>
-                  <Menu.Item>Saturday</Menu.Item>
-                  <Menu.Item>Sunday</Menu.Item>
+                <Menu.Content
+                  bg="var(--neutral-800)"
+                  width="214px"
+                  spaceY="4px"
+                  rounded="12px"
+                  p="6px 8px"
+                  border="1px solid var(--neutral-600)"
+                  shadow="box-shadow: 0px 8px 16px 0px #02012C52;"
+                >
+                  <Menu.Item
+                    cursor="pointer"
+                    p="10px 8px"
+                    bg="var(--neutral-700)"
+                    rounded="8px"
+                    value="tue"
+                  >
+                    Tuesday
+                  </Menu.Item>
+                  <Menu.Item
+                    cursor="pointer"
+                    p="10px 8px"
+                    bg="var(--neutral-700)"
+                    rounded="8px"
+                  >
+                    Wednesday
+                  </Menu.Item>
+                  <Menu.Item
+                    cursor="pointer"
+                    p="10px 8px"
+                    bg="var(--neutral-700)"
+                    rounded="8px"
+                  >
+                    Thurday
+                  </Menu.Item>
+                  <Menu.Item
+                    cursor="pointer"
+                    p="10px 8px"
+                    bg="var(--neutral-700)"
+                    rounded="8px"
+                  >
+                    Friday
+                  </Menu.Item>
                 </Menu.Content>
               </Menu.Positioner>
             </Portal>
