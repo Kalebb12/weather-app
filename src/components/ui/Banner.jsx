@@ -28,10 +28,10 @@ const Banner = () => {
             <Text fontWeight="600" fontSize="96px" fontStyle="italic">
               20°
             </Text>
-            <Image src="/images/banner-cloud-1.png" bottom={0} right={0} alt="" position="absolute"/>
-            <Image src="/images/banner-cloud-2.png" bottom={0} left={0} alt="" position="absolute"/>
-            <Image src="/images/banner-star.svg" top="34px" left="356px"  alt="" position="absolute"/>
-            <Image src="/images/banner-star.svg" top="222px" left="310px" alt="" position="absolute"/>
+            <Image src="/images/banner-cloud-1.png" draggable="false" bottom={0} right={0} alt="" position="absolute"/>
+            <Image src="/images/banner-cloud-2.png" draggable="false" bottom={0} left={0} alt="" position="absolute"/>
+            <Image src="/images/banner-star.svg" draggable="false" top="34px" left="356px"  alt="" position="absolute"/>
+            <Image src="/images/banner-star.svg" draggable="false" top="222px" left="310px" alt="" position="absolute"/>
           </HStack>
         </HStack>
   )
