@@ -1,18 +1,8 @@
-import useForecast from "@/hooks/useForecast";
 import { Box, VStack } from "@chakra-ui/react";
 import React, { useEffect, useRef } from "react";
 
 const SearchDropdown = ({ cityOptions }) => {
   const ref = useRef(null);
-  const [location, setLocation] = React.useState({});
-
-  const { getForecast } = useForecast(location.lat, location.long);
-
-  useEffect(() => {
-    if (location.lat && location.long) {
-      getForecast();
-    }
-  }, [location, getForecast]);
 
   useEffect(() => {
     const handleClick = (e) => {
@@ -24,10 +14,18 @@ const SearchDropdown = ({ cityOptions }) => {
     return () => document.removeEventListener("click", handleClick);
   }, []);
 
+
   if (!cityOptions) return null;
 
   const handleBoxClick = (lat, long) => {
-    setLocation({ lat, long });
+    const searchParams = new URLSearchParams();
+    searchParams.set("lat", lat); // Using the set() method
+    searchParams.set("long", long); // Using the set() method
+
+    // Update the browser's URL using pushState() as before
+    const path = window.location.pathname;
+    history.pushState(null, "", `${path}?${searchParams.toString()}`);
+
     ref.current.style.display = "none";
   };
 

@@ -1,12 +1,50 @@
 import { getWeatherForecast } from "@/services/forecastApi";
-import { useMutation } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
+import { useState, useEffect, useCallback } from "react";
 
-const useForecast = (lat, long) => {
-  const {mutate: getForecast, data, error, isPending } = useMutation({
-    mutationFn: () => getWeatherForecast(lat, long),
+const useForecast = () => {
+  const [coords, setCoords] = useState({ lat: null, long: null });
+
+  // Function to request geolocation
+  const refreshLocation = useCallback(() => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setCoords({
+            lat: position.coords.latitude,
+            long: position.coords.longitude,
+          });
+        },
+        (error) => {
+          setCoords({ lat: 52.52437, long: 13.41053 }); // fallback
+          console.log(error);
+        }
+      );
+    } else {
+      setCoords({ lat: 52.52437, long: 13.41053 }); // fallback
+      console.log("No navigator.geolocation");
+    }
+  }, []);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    let lat = searchParams.get("lat");
+    let long = searchParams.get("long");
+
+    if (lat && long) {
+      setCoords({ lat, long });
+    } else {
+      refreshLocation();
+    }
+  }, [refreshLocation]);
+
+  const { data, error, isPending } = useQuery({
+    queryFn: () => getWeatherForecast(coords.lat, coords.long),
+    queryKey: ["forecast",`coord_${coords.lat}_${coords.long}`],
+    enabled: !!coords.lat && !!coords.long,
   });
 
-  return { getForecast ,data, error, isPending };
+  return { data, error, isPending, refreshLocation };
 };
 
 export default useForecast;

@@ -13,13 +13,14 @@ import { FaSearch } from "react-icons/fa";
 import Banner from "./Banner";
 import WeatherCard from "./WeatherCard";
 import ForcastCard from "./ForcastCard";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { getLocation } from "@/services/forecastApi";
 import SearchDropdown from "./SearchDropdown";
 import useForecast from "@/hooks/useForecast";
 
 const WeatherFeature = () => {
   const [location, setLocation] = useState("");
+
 
   const handleSearch = () => {
     getLocationData(location);
@@ -33,7 +34,7 @@ const WeatherFeature = () => {
     mutationFn: () => getLocation(location),
   });
 
-  // const {data: forecast,isPending: forcastPending,error} = useForecast()
+  const {data: forecast,isPending: forcastPending,error} = useForecast()
 
   return (
     <Flex direction="column" gap="48px" alignItems="center">
@@ -62,6 +63,8 @@ const WeatherFeature = () => {
           px="24px"
           py="16px"
           onClick={handleSearch}
+          loading={isPending}
+          loadingText="loading..."
         >
           Search
         </Button>

@@ -4,6 +4,7 @@ export const getWeatherForecast = async (lat, long) => {
     const res = await fetch(api);
     const data = await res.json();
 
+    console.log("forcast data",lat,long,data)
     return data;
   } catch (error) {
     console.error("API ERROR!!", error);
