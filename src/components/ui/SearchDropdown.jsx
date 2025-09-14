@@ -1,8 +1,10 @@
 import { Box, VStack } from "@chakra-ui/react";
 import React, { useEffect, useRef } from "react";
+import { useSearchParams } from "react-router";
 
 const SearchDropdown = ({ cityOptions }) => {
   const ref = useRef(null);
+  const [_,setSearchParams] = useSearchParams();
 
   useEffect(() => {
     const handleClick = (e) => {
@@ -16,16 +18,9 @@ const SearchDropdown = ({ cityOptions }) => {
 
 
   if (!cityOptions) return null;
-
-  const handleBoxClick = (lat, long) => {
-    const searchParams = new URLSearchParams();
-    searchParams.set("lat", lat); // Using the set() method
-    searchParams.set("long", long); // Using the set() method
-
-    // Update the browser's URL using pushState() as before
-    const path = window.location.pathname;
-    history.pushState(null, "", `${path}?${searchParams.toString()}`);
-
+  const handleBoxClick = (lat, long, name, country) => {
+    const location = `${name}, ${country}`;
+    setSearchParams({ lat, long });
     ref.current.style.display = "none";
   };
 
@@ -56,9 +51,9 @@ const SearchDropdown = ({ cityOptions }) => {
               bg: "var(--neutral-700)",
             }}
             key={city.id}
-            onClick={() => handleBoxClick(city.latitude, city.longitude)}
+            onClick={() => handleBoxClick(city.latitude, city.longitude, city.name, city.country)}
           >
-            {city.admin1}, {city.country}
+            {city.name}, {city.country}
           </Box>
         );
       })}

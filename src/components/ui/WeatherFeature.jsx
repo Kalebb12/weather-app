@@ -34,8 +34,6 @@ const WeatherFeature = () => {
     mutationFn: () => getLocation(location),
   });
 
-  const {data: forecast,isPending: forcastPending,error} = useForecast()
-
   return (
     <Flex direction="column" gap="48px" alignItems="center">
       <Flex gap="18px" position="relative">
@@ -69,70 +67,41 @@ const WeatherFeature = () => {
           Search
         </Button>
       </Flex>
-      <Main isPending={isPending} data={data} />
+      <Main />
     </Flex>
   );
 };
 
 export default WeatherFeature;
 
-const Main = ({ isPending, data }) => {
+const Main = () => {
+  const {data,isPending,error} = useForecast()
   return (
     <Flex gap="32px" justifyContent="center">
       <Flex direction="column" gap="48px" width="800px">
         <Flex direction="column" gap="32px">
           <Banner isPending={isPending} data={data} />
           <HStack gap="24px" alignItems="center">
-            <WeatherCard title="feels like" value="20" unit="°C" />
-            <WeatherCard title="Humidity" value="46" unit="%" />
-            <WeatherCard title="Wind" value="14" unit="Km/hr" />
-            <WeatherCard title="Precipitation" value="0" unit="mm" />
+            <WeatherCard title="feels like" value={data?.current.apparent_temperature} unit={data?.current_units.apparent_temperature} />
+            <WeatherCard title="Humidity" value={data?.current.relative_humidity_2m} unit={data?.current_units.relative_humidity_2m} />
+            <WeatherCard title="Wind" value={data?.current.wind_speed_10m} unit={data?.current_units.wind_speed_10m} />
+            <WeatherCard title="Precipitation" value={data?.current.precipitation} unit={data?.current_units.precipitation} />
           </HStack>
         </Flex>
 
         <Flex gap="20px">
-          <ForcastCard
-            imgSrc="/images/icon-rain.webp"
-            day="Mon"
-            highTemp="20°"
-            lowTemp="13°"
-          />
-          <ForcastCard
-            imgSrc="/images/icon-rain.webp"
-            day="Mon"
-            highTemp="20°"
-            lowTemp="13°"
-          />
-          <ForcastCard
-            imgSrc="/images/icon-rain.webp"
-            day="Mon"
-            highTemp="20°"
-            lowTemp="13°"
-          />
-          <ForcastCard
-            imgSrc="/images/icon-rain.webp"
-            day="Mon"
-            highTemp="20°"
-            lowTemp="13°"
-          />
-          <ForcastCard
-            imgSrc="/images/icon-rain.webp"
-            day="Mon"
-            highTemp="20°"
-            lowTemp="13°"
-          />
-          <ForcastCard
-            imgSrc="/images/icon-rain.webp"
-            day="Mon"
-            highTemp="20°"
-            lowTemp="13°"
-          />
-          <ForcastCard
-            imgSrc="/images/icon-storm.webp"
-            day="Mon"
-            highTemp="20°"
-            lowTemp="13°"
-          />
+          {
+            data?.daily.time.map((time,index) => (
+              <ForcastCard
+                key={index}
+                weatherCode={data?.daily.weather_code[index]}
+                // imgSrc="/images/icon-rain.webp"
+                day={time}
+                highTemp={data?.daily.temperature_2m_max[index]}
+                lowTemp={data?.daily.temperature_2m_min[index] }
+              />
+            ))
+          }
         </Flex>
       </Flex>
       <Flex

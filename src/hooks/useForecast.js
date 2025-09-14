@@ -1,9 +1,12 @@
 import { getWeatherForecast } from "@/services/forecastApi";
 import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect, useCallback } from "react";
+import { useSearchParams } from "react-router";
 
 const useForecast = () => {
-  const [coords, setCoords] = useState({ lat: null, long: null });
+  const [coords, setCoords] = useState({ lat: null, long: null});
+  const [searchParams,setSearchParams] = useSearchParams();
+  
 
   // Function to request geolocation
   const refreshLocation = useCallback(() => {
@@ -27,16 +30,17 @@ const useForecast = () => {
   }, []);
 
   useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search);
     let lat = searchParams.get("lat");
     let long = searchParams.get("long");
+
+    console.log("effect ran",lat,long)
 
     if (lat && long) {
       setCoords({ lat, long });
     } else {
       refreshLocation();
     }
-  }, [refreshLocation]);
+  }, [refreshLocation, searchParams]);
 
   const { data, error, isPending } = useQuery({
     queryFn: () => getWeatherForecast(coords.lat, coords.long),
@@ -44,7 +48,7 @@ const useForecast = () => {
     enabled: !!coords.lat && !!coords.long,
   });
 
-  return { data, error, isPending, refreshLocation };
+  return { data, error, isPending };
 };
 
 export default useForecast;
