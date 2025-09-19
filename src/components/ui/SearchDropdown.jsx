@@ -19,7 +19,6 @@ const SearchDropdown = ({ cityOptions }) => {
 
   if (!cityOptions) return null;
   const handleBoxClick = (lat, long, name, country) => {
-    const location = `${name}, ${country}`;
     setSearchParams({ lat, long });
     ref.current.style.display = "none";
   };

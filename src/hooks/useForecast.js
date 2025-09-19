@@ -6,14 +6,13 @@ import { useSearchParams } from "react-router";
 const useForecast = () => {
   const [coords, setCoords] = useState({ lat: null, long: null});
   const [searchParams,setSearchParams] = useSearchParams();
-  
 
   // Function to request geolocation
   const refreshLocation = useCallback(() => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          setCoords({
+          setCoords ({
             lat: position.coords.latitude,
             long: position.coords.longitude,
           });
@@ -22,6 +21,7 @@ const useForecast = () => {
           setCoords({ lat: 52.52437, long: 13.41053 }); // fallback
           console.log(error);
         }
+        
       );
     } else {
       setCoords({ lat: 52.52437, long: 13.41053 }); // fallback
@@ -32,8 +32,6 @@ const useForecast = () => {
   useEffect(() => {
     let lat = searchParams.get("lat");
     let long = searchParams.get("long");
-
-    console.log("effect ran",lat,long)
 
     if (lat && long) {
       setCoords({ lat, long });

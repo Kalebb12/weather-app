@@ -2,9 +2,9 @@ export const getWeatherForecast = async (lat, long) => {
   try {
     const api = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&current=temperature_2m,relative_humidity_2m,precipitation,wind_speed_10m,apparent_temperature,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto`;
     const res = await fetch(api);
+    console.log(lat,long)
     const data = await res.json();
 
-    console.log("forcast data",lat,long,data)
     return data;
   } catch (error) {
     console.error("API ERROR!!", error);
