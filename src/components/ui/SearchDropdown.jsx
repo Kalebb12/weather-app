@@ -31,7 +31,7 @@ const SearchDropdown = ({ cityOptions }) => {
       position="absolute"
       gap="4px"
       padding="8px"
-      width="528px"
+      width={{md:"526px",base:"full"}}
       rounded="12px"
       top="66px"
       zIndex={10}

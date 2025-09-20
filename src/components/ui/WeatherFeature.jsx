@@ -35,11 +35,11 @@ const WeatherFeature = () => {
   });
 
   return (
-    <Flex direction="column" gap="48px" alignItems="center">
-      <Flex gap="18px" position="relative">
-        <InputGroup startElement={<FaSearch color="var(--neutral-0)" />}>
+    <Flex direction="column"  gap="48px" width="full" alignItems="center">
+      <Flex gap="18px" flexDirection={{sm:"row",base:"column"}} justifyContent="center" width="full" position="relative">
+        <InputGroup startElement={<FaSearch color="var(--neutral-0)" />} width={{md:"fit",base:"full"}}>
           <Input
-            width="528px"
+            width={{md:"526px",base:"full"}}
             rounded="12px"
             bg="var(--neutral-800)"
             border="none"
@@ -77,19 +77,19 @@ export default WeatherFeature;
 const Main = () => {
   const {data,isPending,error} = useForecast()
   return (
-    <Flex gap="32px" justifyContent="center">
-      <Flex direction="column" gap="48px" width="800px">
+    <Flex gap="32px" flexDirection="column"  md={{flexDirection:"row"}} justifyContent="center" width="full">
+      <Flex direction="column" gap="48px" width={{md:"800px",base:"full"}}>
         <Flex direction="column" gap="32px">
           <Banner isPending={isPending} data={data} />
-          <HStack gap="24px" alignItems="center">
-            <WeatherCard title="feels like" value={data?.current.apparent_temperature} unit={data?.current_units.apparent_temperature} />
+          <Flex gap="20px" md={{gap:"24px"}} flexWrap={{md:"nowrap",base:"wrap"}}alignItems="center">
+            <WeatherCard title="feels like" value={data?.current.apparent_temperature} unit="&deg;" />
             <WeatherCard title="Humidity" value={data?.current.relative_humidity_2m} unit={data?.current_units.relative_humidity_2m} />
             <WeatherCard title="Wind" value={data?.current.wind_speed_10m} unit={data?.current_units.wind_speed_10m} />
             <WeatherCard title="Precipitation" value={data?.current.precipitation} unit={data?.current_units.precipitation} />
-          </HStack>
+          </Flex>
         </Flex>
 
-        <Flex gap="20px">
+        <Flex gap={{md:"20px",base:"16px"}} flexWrap={{md:"nowrap",base:"wrap"}}>
           {
             data?.daily.time.map((time,index) => (
               <ForcastCard
@@ -109,7 +109,7 @@ const Main = () => {
         gap="16px"
         p="24px"
         rounded="20px"
-        width="384px"
+        width={{md:"384px",base:"full"}}
         bg="var(--neutral-800)"
       >
         <HStack justifyContent="space-between">

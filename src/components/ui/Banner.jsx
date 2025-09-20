@@ -1,4 +1,4 @@
-import { Heading, HStack, Image, Text, VStack } from "@chakra-ui/react";
+import { Flex, Heading, HStack, Image, Text, VStack } from "@chakra-ui/react";
 import PendingBanner from "./PendingBanner";
 import { dateFormatter } from "@/utils/DateFormatter";
 import { weatherCodeFormatter } from "@/utils/weatherCodeFormatter";
@@ -17,8 +17,9 @@ const Banner = ({ isPending, data }) => {
 
   const formattedDate = dateFormatter(data?.current.time, options);
   return (
-    <HStack
+    <Flex
       position="relative"
+      flexDirection={{sm:"row",base:"column"}}
       bg="var(--banner-gradient)"
       py="var(--spacing-1000)"
       px="var(--spacing-300)"
@@ -41,7 +42,7 @@ const Banner = ({ isPending, data }) => {
           alt="current forecast"
         />
         <Text fontWeight="600" fontSize="96px" fontStyle="italic">
-          {parseInt(data?.current.temperature_2m)}{data?.current_units.temperature_2m}
+          {parseInt(data?.current.temperature_2m)}&deg;
         </Text>
         <Image
           src="/images/banner-cloud-1.png"
@@ -76,7 +77,7 @@ const Banner = ({ isPending, data }) => {
           position="absolute"
         />
       </HStack>
-    </HStack>
+    </Flex>
   );
 };
 
