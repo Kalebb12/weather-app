@@ -10,7 +10,6 @@ const App = () => {
       maxWidth="1218px"
       marginX="auto"
       gap="64px"
-      // p={{ base: "16px", md: "32px", lg: "48px 112px" }}
       px={{sm:"24px", base:"16px"}}
       py={{md:"48px",sm:"24px" ,base:"16px"}}
     >

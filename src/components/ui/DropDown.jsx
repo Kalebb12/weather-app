@@ -31,11 +31,11 @@ const DropDown = () => {
     <Menu.Root>
       <Menu.Trigger asChild>
         <Button
-          p="12px 16px"
-          spaceX="10px"
+          p={{md:"12px 16px",lg:"8px 10px"}}
+          spaceX={{md:"10px",base:"6px"}}
           bg="var(--neutral-800)"
           variant="subtle"
-          rounded="8px"
+          rounded={{md:"8px",base:"6px"}}
         >
           <FaCog size={18} />
           <span>Units</span>
