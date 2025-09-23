@@ -6,7 +6,7 @@ const WeatherCard = ({title,value,unit}) => {
   return (
     <Box spaceY="24px" flexGrow={{md:"1",base:"0"}} width="163.5px" bg="var(--neutral-800)" border="1px solid var(--neutral-600)" rounded="12px" p="20px">
         <Text color="var(--neutral-200)" fontWeight="medium" fontSize="18px">{title || "-" }</Text>
-        <Text fontWeight="light" color="var(--neutral-0)" fontSize="32px">{int} {unit || "-"}</Text>
+        <Text fontWeight="light" color="var(--neutral-0)" fontSize="32px">{int}{unit || "-"}</Text>
     </Box>
   )
 }

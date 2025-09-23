@@ -2,21 +2,18 @@ import React, { useState } from "react";
 import {
   Button,
   Flex,
-  Heading,
-  HStack,
   Input,
   InputGroup,
-  Menu,
-  Portal,
 } from "@chakra-ui/react";
 import { FaSearch } from "react-icons/fa";
 import Banner from "./Banner";
 import WeatherCard from "./WeatherCard";
 import ForcastCard from "./ForcastCard";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { getLocation } from "@/services/forecastApi";
 import SearchDropdown from "./SearchDropdown";
 import useForecast from "@/hooks/useForecast";
+import HourlyForecast from "./HourlyForecast";
 
 const WeatherFeature = () => {
   const [location, setLocation] = useState("");
@@ -104,78 +101,7 @@ const Main = () => {
           }
         </Flex>
       </Flex>
-      <Flex
-        direction="column"
-        gap="16px"
-        p="24px"
-        rounded="20px"
-        width={{lg:"384px",base:"full"}}
-        bg="var(--neutral-800)"
-      >
-        <HStack justifyContent="space-between">
-          <Heading>Hourly forecast</Heading>
-          <Menu.Root highlightedValue="mon">
-            <Menu.Trigger asChild>
-              <Button
-                p="12px 16px"
-                spaceX="10px"
-                bg="var(--neutral-600)"
-                variant="subtle"
-                rounded="8px"
-              >
-                Days
-              </Button>
-            </Menu.Trigger>
-            <Portal>
-              <Menu.Positioner>
-                <Menu.Content
-                  bg="var(--neutral-800)"
-                  width="214px"
-                  spaceY="4px"
-                  rounded="12px"
-                  p="6px 8px"
-                  border="1px solid var(--neutral-600)"
-                  shadow="box-shadow: 0px 8px 16px 0px #02012C52;"
-                >
-                  <Menu.Item
-                    cursor="pointer"
-                    p="10px 8px"
-                    bg="var(--neutral-700)"
-                    rounded="8px"
-                    value="tue"
-                  >
-                    Tuesday
-                  </Menu.Item>
-                  <Menu.Item
-                    cursor="pointer"
-                    p="10px 8px"
-                    bg="var(--neutral-700)"
-                    rounded="8px"
-                  >
-                    Wednesday
-                  </Menu.Item>
-                  <Menu.Item
-                    cursor="pointer"
-                    p="10px 8px"
-                    bg="var(--neutral-700)"
-                    rounded="8px"
-                  >
-                    Thurday
-                  </Menu.Item>
-                  <Menu.Item
-                    cursor="pointer"
-                    p="10px 8px"
-                    bg="var(--neutral-700)"
-                    rounded="8px"
-                  >
-                    Friday
-                  </Menu.Item>
-                </Menu.Content>
-              </Menu.Positioner>
-            </Portal>
-          </Menu.Root>
-        </HStack>
-      </Flex>
+      <HourlyForecast data={data}/>
     </Flex>
   );
 };

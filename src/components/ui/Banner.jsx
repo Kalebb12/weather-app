@@ -19,6 +19,7 @@ const Banner = ({ isPending, data }) => {
   return (
     <Flex
       position="relative"
+      alignItems="center"
       flexDirection={{sm:"row",base:"column"}}
       bg="var(--banner-gradient)"
       py="var(--spacing-1000)"
