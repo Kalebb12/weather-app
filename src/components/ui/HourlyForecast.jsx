@@ -12,9 +12,10 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import HourlyForecastShadow from "./HourlyForecastShadow";
 
 const HourlyForecast = ({ data }) => {
-  if (!data) return null;
+  if (!data) return <HourlyForecastShadow />;
   const dayNum = new Date().getDay();
   const [selectValue, setSelectValue] = useState(dayNum);
   const [dayShift, setDayShift] = useState(0);
@@ -122,7 +123,7 @@ const HourlyForecast = ({ data }) => {
             border="1px solid var(--neutral-600)"
             rounded="8px"
             gap="8px"
-            p="9px 12px"
+            p="10px 16px"
             justifyContent="space-between"
             fontWeight="medium"
             key={index}

@@ -27,7 +27,7 @@ const ForcastCard = ({ day, weatherCode, highTemp, lowTemp }) => {
         objectPosition="center"
         bg="transparent"
         src={imgSrc} alt="forcast"/>
-      <HStack justifyContent="space-between">
+      <HStack justifyContent="space-between" height="fit">
         <Text>{parseInt(highTemp)}&deg;</Text>
         <Text>{parseInt(lowTemp)}&deg;</Text>
       </HStack>

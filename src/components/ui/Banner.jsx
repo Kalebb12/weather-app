@@ -29,7 +29,7 @@ const Banner = ({ isPending, data }) => {
     >
       <VStack align="start" flexGrow="1" gap="12px">
         <Heading fontSize="28px" fontWeight="bold">
-          Berlin,Germany
+          {data.location}
         </Heading>
         <Text fontWeight="medium" fontSize="18px">
           {formattedDate}
