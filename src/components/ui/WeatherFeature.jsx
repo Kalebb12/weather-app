@@ -7,9 +7,9 @@ import ForcastCard from "./ForcastCard";
 import { useMutation } from "@tanstack/react-query";
 import { getLocation } from "@/services/forecastApi";
 import SearchDropdown from "./SearchDropdown";
-import useForecast from "@/hooks/useForecast";
 import HourlyForecast from "./HourlyForecast";
 import ForcastCardShadow from "./ForcastCardShadow";
+import { useFetch } from "@/context/fetchWeather";
 
 const WeatherFeature = () => {
   const [location, setLocation] = useState("");
@@ -76,7 +76,7 @@ const WeatherFeature = () => {
 export default WeatherFeature;
 
 const Main = () => {
-  const { data, isPending, error } = useForecast();
+  const { data, isPending } = useFetch();
   return (
     <Flex
       gap="32px"
