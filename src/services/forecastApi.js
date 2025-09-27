@@ -5,9 +5,8 @@ export const getWeatherForecast = async (lat, long) => {
     const [res, res2] = await Promise.all([fetch(api), fetch(url)]);
     const data = await res.json();
     const locationData = await res2.json();
-
     // get location Name, Country
-    data.location = `${locationData.address.state}, ${locationData.address.country}`;
+    data.location = `${locationData.address.city || locationData.address.state || locationData.address.road || locationData.address.village }, ${locationData.address.country}`;
     return data;
   } catch (error) {
     console.error("API ERROR!!", error);

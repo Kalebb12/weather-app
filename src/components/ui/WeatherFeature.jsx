@@ -98,7 +98,7 @@ const Main = () => {
             <WeatherCard
               title="feels like"
               value={data?.current.apparent_temperature}
-              unit="&deg;"
+              unit={data?.current_units.apparent_temperature}
             />
             <WeatherCard
               title="Humidity"

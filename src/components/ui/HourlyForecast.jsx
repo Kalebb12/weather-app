@@ -2,6 +2,7 @@ import { dateFormatter } from "@/utils/DateFormatter";
 import { timeFormatter } from "@/utils/TimeFormatter";
 import { weatherCodeFormatter } from "@/utils/weatherCodeFormatter";
 import {
+  Box,
   createListCollection,
   Flex,
   Heading,
@@ -33,7 +34,7 @@ const HourlyForecast = ({ data }) => {
 
   const handleSelectChange = (val) => {
     if (val < dayNum) {
-      setSelectValue(val - (dayNum + 7));
+      setSelectValue(val + 7 - dayNum);
     } else setSelectValue(val - dayNum);
   };
 
@@ -41,17 +42,18 @@ const HourlyForecast = ({ data }) => {
   const today = dateFormatter(day, { weekday: "long" })
     ?.slice(0, 3)
     .toLowerCase();
-  const sliceStartIndex = data.hourly.time.findIndex(
-    (t) => t.slice(0, 13) === day.slice(0, 13)
-  );
+
 
   useEffect(() => {
     setDayShift(selectValue * 24);
   }, [selectValue]);
 
-  const hourlyTime = data.hourly.time.slice((sliceStartIndex + dayShift), (sliceStartIndex + dayShift + 8))
-  const hourlyTemp = data.hourly.temperature_2m.slice((sliceStartIndex + dayShift), (sliceStartIndex + dayShift + 8))
-  const hourlyWeatherCode = data.hourly.weather_code.slice((sliceStartIndex + dayShift), (sliceStartIndex + dayShift + 8))
+  const hourlyTime = data.hourly.time.slice(dayShift, dayShift + 24);
+  const hourlyTemp = data.hourly.temperature_2m.slice(dayShift, dayShift + 24);
+  const hourlyWeatherCode = data.hourly.weather_code.slice(
+    dayShift,
+    dayShift + 24
+  );
   return (
     <Flex
       direction="column"
@@ -60,6 +62,7 @@ const HourlyForecast = ({ data }) => {
       rounded="20px"
       width={{ lg: "384px", base: "full" }}
       bg="var(--neutral-800)"
+      height="753px"
     >
       <HStack justifyContent="space-between">
         <Heading fontSize="20px" fontWeight="semibold">
@@ -117,7 +120,8 @@ const HourlyForecast = ({ data }) => {
         </Select.Root>
       </HStack>
 
-      {hourlyTime.map((time, index) => (
+      <Flex direction="column" gap="16px" overflowY="scroll" scrollbar="hidden">
+        {hourlyTime.map((time, index) => (
           <HStack
             bg="var(--neutral-700)"
             border="1px solid var(--neutral-600)"
@@ -125,6 +129,7 @@ const HourlyForecast = ({ data }) => {
             gap="8px"
             p="10px 16px"
             justifyContent="space-between"
+            scrollSnapDestination="top"
             fontWeight="medium"
             key={index}
           >
@@ -140,11 +145,10 @@ const HourlyForecast = ({ data }) => {
                 hour12: true,
               })}
             </Text>
-            <Text fontSize="16px">
-              {hourlyTemp[index]}&deg;
-            </Text>
+            <Text fontSize="16px">{hourlyTemp[index]}&deg;</Text>
           </HStack>
         ))}
+      </Flex>
     </Flex>
   );
 };
